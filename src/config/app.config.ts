@@ -11,6 +11,7 @@ export const appConfig = {
     analytics: import.meta.env.VITE_ENABLE_ANALYTICS === 'true',
   },
   routes: {
+    welcome: '/welcome',
     login: '/login',
     dashboard: '/dashboard',
     incidents: '/incidents',

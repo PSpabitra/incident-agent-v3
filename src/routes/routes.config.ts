@@ -10,7 +10,7 @@ interface RouteDefinition {
 
 export const routesConfig: RouteDefinition[] = [
   {
-    path: '/welcome',
+    path: appConfig.routes.welcome,
     Component: lazy(() => import('@/pages/Landing')),
     isPublic: true,
   },

@@ -28,7 +28,7 @@ export function Header({ onMenuClick }: HeaderProps) {
 
   const handleLogout = async () => {
     await logout();
-    navigate(appConfig.routes.login);
+    navigate(appConfig.routes.welcome);
   };
 
   return (
