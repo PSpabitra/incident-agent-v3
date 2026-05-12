@@ -144,18 +144,18 @@ export default function Runbooks() {
                     <div className="min-w-0">
                       <p className="text-xs font-mono text-muted-foreground">{selected.id}</p>
                       <h2 className="mt-1 text-xl font-bold text-foreground">{selected.name}</h2>
-                      <p className="mt-1 text-sm text-muted-foreground">{selected.description}</p>
+                      {/* <p className="mt-1 text-sm text-muted-foreground">{selected.description}</p> */}
                     </div>
                     <Badge variant={selected.isActive ? 'success' : 'muted'} dot className="shrink-0">
                       {selected.isActive ? 'Active' : 'Disabled'}
                     </Badge>
                   </div>
-                  <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {/* <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
                     <Stat icon={TrendingUp} label="Success rate" value={formatPercent(selected.successRate, 0)} />
                     <Stat icon={Clock} label="Avg duration" value={formatDuration(selected.averageDurationSeconds)} />
                     <Stat icon={GitBranch} label="Executions" value={selected.executionCount.toString()} />
                     <Stat icon={Clock} label="Updated" value={formatRelativeTime(selected.lastUpdated)} />
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* ----------- Tabs ----------- */}
@@ -163,7 +163,7 @@ export default function Runbooks() {
                   {(
                     [
                       { id: 'steps', label: 'Defined steps', icon: GitBranch },
-                      { id: 'history', label: 'Execution history', icon: History },
+                     
                     ] as const
                   ).map((tab) => {
                     const Icon = tab.icon;
