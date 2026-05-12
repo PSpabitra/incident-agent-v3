@@ -9,12 +9,15 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { PageSpinner } from '@/components/ui/Spinner';
 import { EmptyState } from '@/components/shared/EmptyState';
+import { CreateContentModal } from '@/components/shared/CreateContentModal';
 import { kbApi } from '@/services/api/endpoints';
 import { useDebounce } from '@/hooks/useDebounce';
 import { formatRelativeTime } from '@/utils/formatters';
 
 export default function KnowledgeBase() {
   const [search, setSearch] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'Runbook' | 'Article'>('Article');
   const debouncedSearch = useDebounce(search, 300);
 
   const { data, isLoading } = useQuery({
@@ -23,14 +26,38 @@ export default function KnowledgeBase() {
       debouncedSearch ? kbApi.search(debouncedSearch) : kbApi.list(),
   });
 
+  const handleCreate = (data: { name: string; files: File[] }) => {
+    console.log('Creating', modalType, data);
+    // API call would go here
+    setIsModalOpen(false);
+  };
+
   return (
     <PageWrapper
       title="Knowledge Base"
       description="Continuously updated articles drafted by the KB Learning Agent."
       actions={
-        <Button leftIcon={<Plus className="h-4 w-4" />}>New Article</Button>
+        <div className="flex gap-2">
+          
+          <Button
+            leftIcon={<Plus className="h-4 w-4" />}
+            onClick={() => {
+              setModalType('Article');
+              setIsModalOpen(true);
+            }}
+          >
+            New Article
+          </Button>
+        </div>
       }
     >
+      <CreateContentModal
+        isOpen={isModalOpen}
+        type={modalType}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleCreate}
+      />
+
       <Card className="mb-6">
         <div className="px-4 py-4">
           <Input

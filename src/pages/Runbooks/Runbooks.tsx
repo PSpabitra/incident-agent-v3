@@ -19,6 +19,7 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { PageSpinner, Spinner } from '@/components/ui/Spinner';
 import { EmptyState } from '@/components/shared/EmptyState';
+import { CreateContentModal } from '@/components/shared/CreateContentModal';
 import { runbookApi } from '@/services/api/endpoints';
 import { formatDuration, formatPercent, formatRelativeTime } from '@/utils/formatters';
 import type { Runbook } from '@/types';
@@ -27,6 +28,8 @@ type TabId = 'steps' | 'history';
 
 export default function Runbooks() {
   const [search, setSearch] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'Runbook' | 'Article'>('Runbook');
   const [selected, setSelected] = useState<Runbook | null>(null);
   const [activeTab, setActiveTab] = useState<TabId>('steps');
 
@@ -34,6 +37,12 @@ export default function Runbooks() {
     queryKey: ['runbooks'],
     queryFn: () => runbookApi.list(),
   });
+
+  const handleCreate = (data: { name: string; files: File[] }) => {
+    console.log('Creating', modalType, data);
+    // Here you would typically call an API to upload files and create the record
+    setIsModalOpen(false);
+  };
 
   const filtered = (data ?? []).filter(
     (rb) =>
@@ -45,8 +54,28 @@ export default function Runbooks() {
     <PageWrapper
       title="Runbook Manager"
       description="Automated remediation playbooks executed by the resolution agent."
-      actions={<Button leftIcon={<Plus className="h-4 w-4" />}>New Runbook</Button>}
+      actions={
+        <div className="flex gap-2">
+         
+          <Button
+            leftIcon={<Plus className="h-4 w-4" />}
+            onClick={() => {
+              setModalType('Runbook');
+              setIsModalOpen(true);
+            }}
+          >
+            New Runbook
+          </Button>
+        </div>
+      }
     >
+      <CreateContentModal
+        isOpen={isModalOpen}
+        type={modalType}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleCreate}
+      />
+
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
         <div className="lg:col-span-2">
           <Card>
