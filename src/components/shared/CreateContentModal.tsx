@@ -85,14 +85,14 @@ export function CreateContentModal({
       size="md"
     >
       <form onSubmit={handleSubmit} className="space-y-6">
-        <Input
+        {/* <Input
           label={`${type} Name`}
           placeholder={"e.g. ADF...."}
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
           autoFocus
-        />
+        /> */}
 
         <div className="space-y-2">
           <label className="text-sm font-medium text-foreground">Upload Files</label>
